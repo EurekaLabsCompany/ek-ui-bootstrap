@@ -1,0 +1,30 @@
+<div>
+<div class="row">
+
+  <div  ng-repeat="item in items">
+    <div class="image-box img-item">
+        <img ng-src="{{item.thumbnail}}">  
+      <div class="image-box-controls" >
+        <span class="glyphicon glyphicon-trash btn btn-warning btn-sm pull-right" ek-confirmed-click="deleteFile(item)"></span>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="image-box dashed text-center add-image link"
+         multiple
+         ngf-select="uploadFiles($files, $invalidFiles)"
+         accept="image/*"
+         ngf-max-size="{{maxSize}}"
+         ngf-min-height="{{minHeight}}"
+         ngf-min-width="{{minWidth}}">
+      <div class="btn-add">
+        <i ng-class="{'fa fa-circle-o-notch fa-spin' : uploading, 'glyphicon glyphicon glyphicon-plus' : uploading != true}"></i>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

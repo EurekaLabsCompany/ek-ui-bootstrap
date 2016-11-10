@@ -1,0 +1,26 @@
+<div>
+  
+    <div class="image-box full-width" ng-show="item.$ngfBlobUrl">
+      <img ng-src="{{item.$ngfBlobUrl}}" class="full-width">
+      <div class="image-box-controls">
+        <span class="glyphicon glyphicon-trash btn btn-warning btn-sm pull-right" ek-confirmed-click="clearFile()"></span>
+      </div>
+    </div>
+ 
+    <div class="image-box full-width text-center add-image link" 
+        ng-show="!item.$ngfBlobUrl"                    
+         ngf-select="uploadFiles($files, $invalidFiles)"
+         accept="image/*"
+         ngf-max-size="{{maxSize}}"
+         ngf-min-height="{{minHeight}}"
+         ngf-min-width="{{minWidth}}">
+      <span class="glyphicon glyphicon-plus btn-add">
+        
+      </span>
+
+    
+  </div>
+
+
+  
+</div>

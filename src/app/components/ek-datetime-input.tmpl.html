@@ -1,0 +1,14 @@
+<div class="input-group">
+    <input type="text"
+           timepicker-options="{showMeridian: false}"
+           datetime-picker="{{dateformat}}"
+           class="form-control"
+           ng-model="dateModel"
+
+    is-open="isOpen"/>
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openCalendar()">
+        <i class="fa" ng-class="{'fa-calendar-check-o' : isOpen, 'fa-calendar-plus-o' : !isOpen}" aria-hidden="true"></i>
+        </button>
+    </span>
+</div>
