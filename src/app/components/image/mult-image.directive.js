@@ -9,7 +9,7 @@
       var multImageDirective = {
         restrict      : 'E',
         templateUrl   : 'app/components/image/mult-image.tmpl.html',
-        scope         : {items : '=?', onUpload : '&', onDelete: '&', imageApi:'@' ,  onError: '&'},
+        scope         : {items : '=?', onUpload : '&', onDelete: '&', onDeleteSuccess:'&', imageApi:'@' ,  onError: '&'},
         replace       : true,
         link          : link
       };
@@ -23,6 +23,7 @@
         var baseHeight;
         var addImageItem = $element.find('.add-image');
         var addImageItemPadding = new Number(addImageItem.css('padding-top').replace('px',''));
+        var filesToUploadQuewe = [];
 
         $scope.$watch('items', onChangeItems);
 
@@ -32,19 +33,26 @@
 
         function uploadFiles(files, errFiles) {
           ImageUploader.syncrhonizeError(errFiles, $scope);
-          angular.forEach(files, startFileUpload);
+          filesToUploadQuewe = files;
+          uploadFileFromQuewe();
         }
 
-        function startFileUpload(file) {
+        function uploadFileFromQuewe() {
           $scope.uploading = true;
+          var file = filesToUploadQuewe.pop();
           ImageUploader.startFileUpload(file, $scope.imageApi).then(onUploadFilesSuccess, onUploadFilesError, angular.bind(file, onProgress));
         }
 
         function onUploadFilesSuccess(response){
           $scope.items.push(response.data);
           $scope.onUpload({data: response.data});
-          $scope.uploading = false;
-          
+
+          if(filesToUpload.length === 0){
+            $scope.uploading = false;
+          }else{
+            uploadFileFromQuewe();
+          }
+
         }
 
         function onUploadFilesError(){
@@ -75,11 +83,11 @@
           }).then(onDeleteSuccess, onDeleteFail)
 
           function onDeleteSuccess(){
-            
+            $scope.onDeleteSuccess();
           }
 
           function onDeleteFail(){
-            
+
           }
         }
 
