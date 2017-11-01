@@ -3,7 +3,7 @@
 
   <div  ng-repeat="item in items">
     <div class="image-box img-item">
-        <img ng-src="{{item.thumbnail}}">  
+        <img ng-src="{{item.thumbnail}}">
       <div class="image-box-controls" >
         <span class="glyphicon glyphicon-trash btn btn-warning btn-sm pull-right" ek-confirmed-click="deleteFile(item)"></span>
       </div>
@@ -13,11 +13,13 @@
 
     <div class="image-box dashed text-center add-image link"
          multiple
+         ngf-max-files={{maxFiles}}
          ngf-select="uploadFiles($files, $invalidFiles)"
          accept="image/*"
          ngf-max-size="{{maxSize}}"
          ngf-min-height="{{minHeight}}"
-         ngf-min-width="{{minWidth}}">
+         ngf-min-width="{{minWidth}}"
+         ng-hide="maxFiles < items.length">
       <div class="btn-add">
         <i ng-class="{'fa fa-circle-o-notch fa-spin' : uploading, 'glyphicon glyphicon glyphicon-plus' : uploading != true}"></i>
       </div>

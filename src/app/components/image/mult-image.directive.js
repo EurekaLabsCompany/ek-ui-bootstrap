@@ -33,11 +33,17 @@
 
         function uploadFiles(files, errFiles) {
           ImageUploader.syncrhonizeError(errFiles, $scope);
-          filesToUploadQuewe = files;
+          filesToUploadQuewe = files || [];
           uploadFileFromQuewe();
         }
 
         function uploadFileFromQuewe() {
+
+          if(filesToUploadQuewe.length === 0){
+            $scope.uploading = false;
+            return;
+          }
+
           $scope.uploading = true;
           var file = filesToUploadQuewe.pop();
           ImageUploader.startFileUpload(file, $scope.imageApi).then(onUploadFilesSuccess, onUploadFilesError, angular.bind(file, onProgress));
@@ -47,7 +53,7 @@
           $scope.items.push(response.data);
           $scope.onUpload({data: response.data});
 
-          if(filesToUpload.length === 0){
+          if(filesToUploadQuewe.length === 0){
             $scope.uploading = false;
           }else{
             uploadFileFromQuewe();
@@ -78,17 +84,7 @@
         }
 
         function deleteFile(file) {
-          $timeout(function(){
-            return $scope.onDelete({data: file})
-          }).then(onDeleteSuccess, onDeleteFail)
-
-          function onDeleteSuccess(){
-            $scope.onDeleteSuccess();
-          }
-
-          function onDeleteFail(){
-
-          }
+          $scope.onDelete({data: file});
         }
 
     }

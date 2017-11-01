@@ -15,15 +15,16 @@
        function argsToOptions(args, options){
         options.minWidth   = angular.isDefined(args.minWidth)   ?   args.minWidth   : 200;
         options.minHeight  = angular.isDefined(args.minHeight)  ?   args.minHeight  : 200;
-        options.maxSize    = angular.isDefined(args.maxSize)    ?   args.maxSize    : '2MB';  
+        options.maxSize    = angular.isDefined(args.maxSize)    ?   args.maxSize    : '2MB';
+        options.maxFiles   = angular.isDefined(args.maxFiles)   ?   args.maxFiles   : '70';
        }
 
        function getErroParam(errFile, options){
           var params = {imageName: errFile.name};
           params.minWidth   = options.minWidth;
           params.minHeight  = options.minHeight;
-          params.maxSize    = options.maxSize;   
-          return params;       
+          params.maxSize    = options.maxSize;
+          return params;
         }
 
         function syncrhonizeError(errFiles, options){
@@ -33,10 +34,10 @@
           if(angular.isArray(errFiles)){
             for (errorFileIndex = errFiles.length - 1; errorFileIndex >= 0; errorFileIndex--) {
               errorFile = errFiles[errorFileIndex];
-              message = $filter('translate')( 'error.' + errorFile.$error,getErroParam(errorFile, options));             
+              message = $filter('translate')( 'error.' + errorFile.$error,getErroParam(errorFile, options));
               options.onError({message: message});
             }
-          }          
+          }
         }
 
         function startFileUpload (file, url) {
