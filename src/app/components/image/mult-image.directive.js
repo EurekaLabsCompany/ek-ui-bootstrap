@@ -25,19 +25,32 @@
         var addImageItemPadding = new Number(addImageItem.css('padding-top').replace('px',''));
         var filesToUploadQuewe = [];
 
+
+
         $scope.$watch('items', onChangeItems);
 
         function onChangeItems(){
           $timeout(syncrhonizeSize, 1000);
+          $timeout(syncrhonizeMaxFiles, 1000);
+        }
+
+        function syncrhonizeMaxFiles(){
+          $scope.internalMaxFiles = ($scope.maxFiles - $scope.items.length)
         }
 
         function uploadFiles(files, errFiles) {
           ImageUploader.syncrhonizeError(errFiles, $scope);
-          filesToUploadQuewe = files;
+          filesToUploadQuewe = files || [];
           uploadFileFromQuewe();
         }
 
         function uploadFileFromQuewe() {
+
+          if(filesToUploadQuewe.length === 0){
+            $scope.uploading = false;
+            return;
+          }
+
           $scope.uploading = true;
           var file = filesToUploadQuewe.pop();
           ImageUploader.startFileUpload(file, $scope.imageApi).then(onUploadFilesSuccess, onUploadFilesError, angular.bind(file, onProgress));
@@ -46,8 +59,9 @@
         function onUploadFilesSuccess(response){
           $scope.items.push(response.data);
           $scope.onUpload({data: response.data});
+          $timeout(syncrhonizeMaxFiles, 1000);
 
-          if(filesToUpload.length === 0){
+          if(filesToUploadQuewe.length === 0){
             $scope.uploading = false;
           }else{
             uploadFileFromQuewe();
@@ -78,17 +92,7 @@
         }
 
         function deleteFile(file) {
-          $timeout(function(){
-            return $scope.onDelete({data: file})
-          }).then(onDeleteSuccess, onDeleteFail)
-
-          function onDeleteSuccess(){
-            $scope.onDeleteSuccess();
-          }
-
-          function onDeleteFail(){
-
-          }
+          $scope.onDelete({data: file});
         }
 
     }
