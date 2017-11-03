@@ -13,13 +13,21 @@
 
     <div class="image-box dashed text-center add-image link"
          multiple
+<<<<<<< HEAD
          ngf-max-files={{internalMaxFiles}}
+=======
+         ngf-max-files={{maxFiles}}
+>>>>>>> b86166437d281c81cff1b382ffa4a07576730086
          ngf-select="uploadFiles($files, $invalidFiles)"
          accept="image/*"
          ngf-max-size="{{maxSize}}"
          ngf-min-height="{{minHeight}}"
          ngf-min-width="{{minWidth}}"
+<<<<<<< HEAD
          ng-hide="maxFiles <= items.length">
+=======
+         ng-hide="maxFiles < items.length">
+>>>>>>> b86166437d281c81cff1b382ffa4a07576730086
       <div class="btn-add">
         <i ng-class="{'fa fa-circle-o-notch fa-spin' : uploading, 'glyphicon glyphicon glyphicon-plus' : uploading != true}"></i>
       </div>
